@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">Lotus lane</h2>
+            <h3 id="artist">The loylist</h3>
+            <div class="img_container">
+                <img src="./img/pexels-shvets-production-7194488.jpg" alt="">
+               
+            </div>
+            <audio src="./music/music1.mp3"></audio>
+
+            <!-- controls -->
+            <div class="music_controls">
+                <i class="fas fa-backward" id="prev" title="previous"></i>
+                <i class="fas fa-play main_button" id="play" title="play"></i>
+                <i class="fas fa-forward" id="next" title="next"></i>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const music = document.querySelector('audio');
+    const img = document.querySelector('img')
+    const play = document.getElementById('play');
+    const title = document.getElementById('title');
+    const artist = document.getElementById('artist');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+
+    const songs = [
+        {
+        name:"music1",
+        image:"image1",
+        title: "Lotus Lane",
+        artist: "the Loylist",
+    },
+    {
+        name:"music2",
+        image:"image2",
+        title: "Lotus lovely",
+        artist: "vk the game",
+    },
+    {
+        name:"music3",
+        image:"image3",
+        title: "game over",
+        artist: "chill dude",
+    }];
+
+    let isPlaying = false;
+
+    //    for play function
+    const playMusic = () => {
+        isPlaying = true;
+        music.play();
+        play.classList.replace("fa-play", "fa-pause");
+        img.classList.add('anime')
+    };
+    const pauseMusic = () => {
+        let isPlaying = false;
+        music.pause();
+        play.classList.replace("fa-pause", "fa-play");
+        img.classList.remove('anime')
+    };
+
+    play.addEventListener('click', () => {
+        if (isPlaying) {
+            pauseMusic();
+        }
+        else {
+            playMusic();
+        }
+    });
+
+
+// changing the music data
+const loadSong=(songs)=>{
+title.textContent= songs.title;
+artist.textContent= songs.artist;
+music.src ="music/"+songs.name +".mp3";
+img.src="img/"+songs.image +".jpg";
+};
+loadSong(songs[2]);
+
+
+// next click button
+songIndex=0;
+const nextSong=()=>{
+    // songIndex++;
+    songIndex=(songIndex + 1) % songs.length;
+    loadSong(songs[songIndex]);
+    playMusic();
+}
+next.addEventListener('click',nextSong)
+
+
+const prevSong=()=>{
+    // songIndex++;
+    songIndex=(songIndex - 1 + songs.length) % songs.length;
+    loadSong(songs[songIndex]);
+    playMusic();
+}
+prev.addEventListener('click',prevSong)
+</script>
+
+</html>
